@@ -32,12 +32,14 @@ def parse_args():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-x', '--x_test_dir', default=path_to_x_test,
-                        help=f'путь к файлу, в котором лежат рекорды тестовой выборки, по умолчанию: {path_to_x_test}')
+                        help=f'path to the file with the testing sample\'s records, '
+                             f'default: {path_to_x_test}')
     parser.add_argument('-y', '--y_test_dir', default=path_to_y_test,
-                        help=f'путь к файлу, в котором лежат метки тестовой выборки, по умолчанию: {path_to_y_test}')
+                        help=f'path to the file with the testing sample\'s labels, '
+                             f'default: {path_to_y_test}')
     parser.add_argument('-m', '--model_input_dir', default=path_to_model,
-                        help='путь к файлу, в который скрипт сохраняет обученную модель, '
-                             f'по умолчанию: {path_to_model}')
+                        help='path to the file for loading model, '
+                             f'default: {path_to_model}')
 
     return parser.parse_args()
 

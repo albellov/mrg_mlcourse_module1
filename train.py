@@ -13,14 +13,15 @@ def _hinge_loss_dataset(predicted_values, true_values):
 
 
 def hinge_loss_in_point(X, y, weights):
+    """Return loss for training SVM model."""
     predicted_values = np.dot(X, weights)
     return _hinge_loss_dataset(predicted_values, y)
 
 
 def regul_loss_in_point(my_loss_fun, coef, ord_=2):
+    """Adding L1 or L2 regularization."""
     def loss_fun(X, y, weights):
         return my_loss_fun(X, y, weights) + coef * np.linalg.norm(weights[1:], ord=ord_)
-
     return loss_fun
 
 
@@ -33,17 +34,18 @@ def _num_gradient(f, X, y, model_weights, w_delta=1e-3):
     cur_f = f(X, y, model_weights)
 
     def diff(dw):
+        """Changing function when changing argument."""
         return f(X, y, model_weights + dw) - cur_f
 
     delta_matrix = np.eye(dim) * w_delta
-
     grad = np.array([diff(dx) for dx in delta_matrix]) / w_delta
 
     return grad
 
 
-def SGD(loss_fun, X, y, model_weights, learning_rate, iter_num=2000, elems=10,
-        decr=1.01, min_learning_rate=1e-3, verbosity=1):
+def mini_batch_GD(loss_fun, X, y, model_weights, learning_rate, iter_num=2000, elems=10,
+                  decr=1.01, min_learning_rate=1e-3, verbosity=1):
+    """Mini-Batch Gradient Descent with a constant learning_rate decrease by the value of 'decr'."""
     losses = []
     for i in range(iter_num):
         indexes = np.random.choice(range(len(X)), elems)
@@ -74,7 +76,6 @@ def _class_balancing(X, y):
     X_original = X.copy()
     y_original = y.copy()
 
-    # for _ in range(num - 1):
     for _ in range(num):
         X = np.vstack((X, X_original[ind, :][0]))
         y = np.concatenate((y, y_original[ind]))
@@ -99,7 +100,8 @@ def fit_model(loss_fun, X_, y_, learning_rate=1,
         _, features_num = X.shape
         init_w = _init_weights(features_num, -0.5, 0.5)
 
-        optimal_weight, loss = SGD(loss_fun, X, yy, init_w, learning_rate, iter_num, elems, decr, verbosity=verbosity)
+        optimal_weight, loss = mini_batch_GD(loss_fun, X, yy, init_w, learning_rate,
+                                             iter_num, elems, decr, verbosity=verbosity)
 
         optimal_weights.append(optimal_weight)
         losses.append(loss)
@@ -108,7 +110,7 @@ def fit_model(loss_fun, X_, y_, learning_rate=1,
 
 
 def learning_model(X, y, K, verbosity=1, iter_num=3000):
-    C_coef = 5000
+    C_coef = 5000 # Matched empirically.
     regul_loss = regul_loss_in_point(hinge_loss_in_point, 0.5 / C_coef, ord_=1)
 
     if K > 1:
@@ -144,20 +146,20 @@ def parse_args():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-x', '--x_train_dir', default=path_to_x_train,
-                        help=f'путь к файлу, в котором лежат рекорды обучающей выборки, '
-                             f'по умолчанию: {path_to_x_train}')
+                        help=f'path to the file with the training sample\'s records, '
+                             f'default: {path_to_x_train}')
     parser.add_argument('-y', '--y_train_dir', default=path_to_y_train,
-                        help=f'путь к файлу, в котором лежат метки обучающей выборки, '
-                             f'по умолчанию: {path_to_y_train}')
+                        help=f'path to the file with the training sample\'s labels, '
+                             f'default: {path_to_y_train}')
     parser.add_argument('-m', '--model_output_dir', default=path_to_model,
-                        help='путь к файлу, в который скрипт сохраняет обученную модель, '
-                             f'по умолчанию: {path_to_model}')
+                        help='path to the file for saving model, '
+                             f'default: {path_to_model}')
     parser.add_argument('-v', '--verbosity', default=1,
-                        help='отображение хода обучения, по умолчанию: 1')
+                        help='is verbosity, default: 1')
     parser.add_argument('-k', '--k', type=int, default=1,
-                        help='параметр для Кросс-валидации, по умолчанию: 1')
+                        help='k-fold parameter, default: 1')
     parser.add_argument('-i', '--iter_num', type=int, default=3000,
-                        help='количество итераций, по умолчанию: 3000')
+                        help='number of iterations, default: 3000')
 
     return parser.parse_args()
 
