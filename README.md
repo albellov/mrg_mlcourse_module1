@@ -1,7 +1,7 @@
 # mrg_mlcourse_module1
 ## Solving steps
 1. Using SVM-model with One-vs-All strategy. (F1-score = 0.9079)
-2. Add Cross-Validation. (F1-score = 0.9103, it was a bad idea)
+2. Add Cross-Validation. (F1-score = 0.9137, it was a bad idea)
 ## Results
 Will be soon.
 ## Using
