@@ -11,6 +11,7 @@
     - Increased features num to 6653.
     
 ## Metrics
+`$ python train.py --iter_num 10000 --batch_size 100`
 * Valid set(last 10000 train's set records):
     
               precision   recall  f1-score   support
