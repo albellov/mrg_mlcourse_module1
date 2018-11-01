@@ -1,3 +1,2 @@
 from utils import *
-from train import *
-from predict import *
+from my_svm import *

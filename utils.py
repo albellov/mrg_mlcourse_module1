@@ -61,7 +61,8 @@ def draw_loss(losses):
     plt.show()
 
 
-def _binarization(X, threshold):
+def _binarization(X_, threshold):
+    X = X_[:]
     ind = np.where(X < threshold)
     X[ind] = 0
     ind = np.where(X != 0)
@@ -79,13 +80,33 @@ def _add_bias(X):
     return np.hstack((bias_f, X))
 
 
-def preprocessing_data(X, threshold=None):
+def _crop_image(X, crop_pixels=None):
+    if crop_pixels is None:
+        return X, X[0].shape
+    h, w = crop_pixels
+
+    record_num, features_num = X.shape
+    size = int(np.sqrt(features_num))
+
+    X = X.reshape(record_num, size, size)
+    X = X[:, h:-h, w:-w]
+
+    shape = X[0].shape
+    X = X.reshape(record_num, (size-2*h)*(size-2*w))
+
+    return X, shape
+
+
+def preprocessing_data(X, threshold=None, crop_pixels=(5, 7)):
     if threshold:
         X = _binarization(X, threshold)
     else:
         X = _scaling(X)
 
-    return _add_bias(X)
+    X, shape = _crop_image(X, crop_pixels)
+
+    X = _add_bias(X)
+    return X, shape
 
 
 def load_weights(file, encoding='latin1'):
