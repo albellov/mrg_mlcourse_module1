@@ -4,7 +4,7 @@
 2. Added Cross-Validation. (`F1-score = 0.9137`, it was a bad idea)
 3. Using SVM-model with Multiclass hinge loss. (http://cs231n.github.io/linear-classify/)
 4. Added pre-processing features:
-    - Сrop 3 pixels at top and bottom, 6 pixels at the sides. The features num became equal to 252.
+    - Сrop 5 pixels at top and bottom, 7 pixels at the sides. The features num became equal to 252.
     - Binarization with threshold. It got worse, now not used.
 5. Added analytical computing the gradient on the Multiclass hinge loss. So more faster! (https://twice22.github.io/hingeloss/)
 6. Added polynomial features. (https://en.wikipedia.org/wiki/Polynomial_kernel)
