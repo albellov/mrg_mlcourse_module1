@@ -1,8 +1,8 @@
 # mrg_mlcourse_module1
 ## Solving steps
-1. Using Linear SVM-model with One-vs-All strategy. (`F1-score = 0.9079`)
+1. Using Linear SVM-model with One-vs-All strategy and L1-regularization. (`F1-score = 0.9079`)
 2. Added Cross-Validation. (`F1-score = 0.9137`, it was a bad idea)
-3. Using SVM-model with Multiclass hinge loss. (http://cs231n.github.io/linear-classify/)
+3. Using SVM-model with Multiclass hinge loss and L1-regularization. (http://cs231n.github.io/linear-classify/)
 4. Added pre-processing features:
     - Сrop 5 pixels at top and bottom, 7 pixels at the sides. The features num became equal to 252.
     - Binarization with threshold. It got worse, now not used.
