@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report
 def parse_args():
     path_to_x_train = 'samples/train-images-idx3-ubyte.gz'
     path_to_y_train = 'samples/train-labels-idx1-ubyte.gz'
-    path_to_model = 'samples/my_model_multi'
+    path_to_model = 'samples/my_model'
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-x', '--x_train_dir', default=path_to_x_train,

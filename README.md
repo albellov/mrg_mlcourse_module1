@@ -8,13 +8,43 @@
     - Binarization with threshold. It got worse, now not used.
 5. Added analytical computing the gradient on the Multiclass hinge loss. So more faster! (https://twice22.github.io/hingeloss/)
 6. Added polynomial features. (https://en.wikipedia.org/wiki/Polynomial_kernel)
-    - Increased features num to 7000.
+    - Increased features num to 6653.
     
 ## Metrics
 * Valid set(last 10000 train's set records):
-    ``
+    
+              precision   recall  f1-score   support
+    
+          0     0.9788    0.9768    0.9778       991
+          1     0.9796    0.9934    0.9865      1064
+          2     0.9409    0.9646    0.9526       990
+          3     0.9479    0.9544    0.9511      1030
+          4     0.9774    0.9695    0.9734       983
+          5     0.9677    0.9180    0.9422       915
+          6     0.9427    0.9866    0.9641       967
+          7     0.9754    0.9459    0.9604      1090
+          8     0.9623    0.9356    0.9487      1009
+          9     0.9301    0.9553    0.9425       961
+        avg     0.9606    0.9603    0.9603     10000   
+
+    
+    
 * Test set:
-    ``
+          
+              precision    recall  f1-score   support
+
+          0     0.9755    0.9755    0.9755       980
+          1     0.9749    0.9938    0.9843      1135
+          2     0.9333    0.9622    0.9475      1032
+          3     0.9458    0.9683    0.9569      1010
+          4     0.9653    0.9644    0.9648       982
+          5     0.9669    0.9170    0.9413       892
+          6     0.9453    0.9749    0.9599       958
+          7     0.9794    0.9241    0.9510      1028
+          8     0.9627    0.9538    0.9582       974
+          9     0.9517    0.9574    0.9545      1009
+
+        avg     0.9602    0.9599    0.9598     10000
 ## Using
 **Training**
 ```shell
